@@ -13,7 +13,7 @@ import { TablesComponent } from './layout/tables/tables.component';
 import { LanguageTranslationModule } from './shared/modules/language-translation/language-translation.module';
 import { PageHeaderModule } from "./shared/modules/page-header/page-header.module";
 import { TablesModule } from './layout/tables/tables.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeComponent } from './layout/employee/employee.component';
 import { ItemsComponent } from './layout/items/items.component';
 import { TicketissueComponent } from './layout/ticketissue/ticketissue.component';
@@ -42,7 +42,9 @@ import { LoginModule } from './login/login.module';
         BrowserAnimationsModule, // required animations module
         ToastrModule.forRoot(),
         NgxPaginationModule,
-        LoginModule
+        LoginModule,
+        FormsModule,
+             ReactiveFormsModule
     
         
         

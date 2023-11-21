@@ -101,4 +101,8 @@ deleteEmployee(id:number){
   
   return this.http.delete(this.url_06+'/'+id);
 }
+
+getManojAllEmployee() {
+  return this.http.delete(this.url_06+'/'+2);
+}
 }

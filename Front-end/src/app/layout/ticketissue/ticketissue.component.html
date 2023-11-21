@@ -3,52 +3,21 @@
 
     <div class="row mb-4">
         <div class="col-md-12">
-            <form #form="ngForm" (submit)="onSubmit(form)">
+            <form [formGroup]="ticketGroup"  (submit)="onSubmit(form)">
                 <div class="row">
 
                     <div class="col-md-6">
                         <fieldset class="form-group">
-                            <label>Ticket No</label>
-                            <input
-                                class="form-control"
-                                [ngClass]="{ 'invalid-input': fullname.invalid && fullname.dirty }"
-                                pattern="^[A-Z][a-z]*(\s[A-Z][a-z]*)*$"
-                                required
-                                name="fullname"
-                                #fullname="ngModel"
-                                [(ngModel)]="service.fromData.fullname"
-                            />
-        
-                            <div *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)" class="error-message">
-                                <div *ngIf="fullname.errors?.required">Ticket No is required</div>
-                                <div *ngIf="fullname.errors?.pattern">Enter a valid Ticket No</div>
-                            </div>
+                            <label for="inputquantity4">Ticket No*</label>
+                            <input type="text" class="form-control" formControlName="ticketnumber" disabled>
                         </fieldset>
                     </div>
                     <div class="col-md-6">
                         <fieldset class="form-group">
                             <label>Description</label>
 
-                            <textarea class="form-control"  name="nic"
-                            [ngClass]="{ 'invalid-input': nic.invalid && nic.dirty }"
-                            pattern="^(([0-9]{9}[vVxX])|([0-2]{12}))$"
-                            required
-                            #nic="ngModel"
-                            [(ngModel)]="service.fromData.nic"
-                            class="form-control"
-                            
-                            
-                            
-                            id="exampleFormControlTextarea1" rows="3"></textarea>
-                            
-        
-                            <div *ngIf="fullname.invalid && (nic.dirty || nic.touched)" class="error-message">
-                                <div *ngIf="nic.errors?.required">Description is required</div>
-                                <div *ngIf="nic.errors?.pattern">Enter a valid Description</div>
-                            </div>
-                            <!-- <div *ngIf="!nic.valid && nic.dirty">
-                                NIC is invalid.
-                            </div> -->
+                            <textarea rows="3" formControlName="description" class="form-control" ></textarea>
+
                         </fieldset>
 
                     </div>
@@ -60,56 +29,18 @@
 
                     <div class="col-md-6">
                         <label for="exampleFormControlSelect1">Issue Type</label>
-                        <select
-                            class="form-control"
-                            required
-                            id="exampleFormControlSelect1"
-                            #civilstatusModel="ngModel"
-                            name="civilstatus"
-                            [(ngModel)]="service.fromData.civilstatus"
-                            [ngModelOptions]="{ standalone: true }"
-                        >
-                            <option>Select Issue Type</option>
-                            <option *ngFor="let status of civilstatus">{{ status }}</option>
-                        </select>
-        
-                        <div
-                            *ngIf="civilstatusModel.invalid && (civilstatusModel.dirty || civilstatusModel.touched)"
-                            class="error-message"
-                        >
-                            <div *ngIf="civilstatusModel.errors?.required">Designation no required</div>
-                            <div class="text-danger">Please select Issue Type.</div>
+                        <select   [ngClass]="{
+                            'is-invalid':
+                                submitted && f.issuetype.errors
+                        }" class="form-control" formControlName="issuetype">
+                            <option *ngFor="let issue of issueTypeList" [ngValue]="issue.id"  >{{issue?.name}}
+                            </option>
+                         </select>
+                        <div *ngIf="submitted && f.issuetype.errors" class="invalid-feedback">
+                          <div *ngIf="f.issuetype.errors.required">
+                            Issue type is required
+                          </div>
                         </div>
-                      
-
-                    </div>
-                    <div class="col-md-6">
-                        
-                
-                        <div class="form-group mt-4">
-                            <label for="exampleFormControlSelect1">Issuer</label>
-                            <select
-                                class="form-control"
-                                required
-                                id="exampleFormControlSelect1"
-                                #civilstatusModel="ngModel"
-                                name="civilstatus"
-                                [(ngModel)]="service.fromData.civilstatus"
-                                [ngModelOptions]="{ standalone: true }"
-                            >
-                                <option>Select Issuer</option>
-                                <option *ngFor="let status of civilstatus">{{ status }}</option>
-                            </select>
-        
-                            <div
-                                *ngIf="civilstatusModel.invalid && (civilstatusModel.dirty || civilstatusModel.touched)"
-                                class="error-message"
-                            >
-                                <div *ngIf="civilstatusModel.errors?.required">Issuer no required</div>
-                                <div class="text-danger">Please select Issuer.</div>
-                            </div>
-                        </div>
-
 
                     </div>
                 </div>
@@ -118,25 +49,18 @@
                     <div class="col-md-6">
                         <div class="form-group mt-4">
                             <label for="exampleFormControlSelect1">Technician</label>
-                            <select
-                                class="form-control"
-                                id="exampleFormControlSelect1"
-                                #designationModel="ngModel"
-                                required
-                                name="designation"
-                                [(ngModel)]="service.fromData.designation"
-                                [ngModelOptions]="{ standalone: true }"
-                            >
-                                <option>Select Technician</option>
-                                <option *ngFor="let onedesingnation of designation">{{ onedesingnation }}</option>
-                            </select>
-        
-                            <div
-                                *ngIf="designationModel.invalid && (designationModel.dirty || designationModel.touched)"
-                                class="error-message"
-                            >
-                                <div *ngIf="designationModel.errors?.required">Technician no required</div>
-                                <div class="text-danger">Please select a Technician.</div>
+                            <select  [ngClass]="{
+                                'is-invalid':
+                                    submitted && f.AssignerId.errors
+                            }" class="form-control" formControlName="AssignerId">
+                                <option value="">Choose your injury</option>
+                                <option *ngFor="let tec of technicianList" [ngValue]="tec.id"  >{{tec?.Callingname}}
+                                </option>
+                             </select>
+                            <div *ngIf="submitted && f.AssignerId.errors" class="invalid-feedback">
+                              <div *ngIf="f.AssignerId.errors.required">
+                               Technician is required
+                              </div>
                             </div>
                         </div>
                       
@@ -145,25 +69,17 @@
                     <div class="col-md-6">
                         <div class="form-group mt-4">
                             <label for="exampleFormControlSelect1">Priority Type</label>
-                            <select
-                                class="form-control"
-                                id="exampleFormControlSelect1"
-                                #designationModel="ngModel"
-                                required
-                                name="designation"
-                                [(ngModel)]="service.fromData.designation"
-                                [ngModelOptions]="{ standalone: true }"
-                            >
-                                <option>Priority Type</option>
-                                <option *ngFor="let onedesingnation of designation">{{ onedesingnation }}</option>
-                            </select>
-                
-                            <div
-                                *ngIf="designationModel.invalid && (designationModel.dirty || designationModel.touched)"
-                                class="error-message"
-                            >
-                                <div *ngIf="designationModel.errors?.required">Priority Type required</div>
-                                <div class="text-danger">Please select a Priority Type.</div>
+                            <select  [ngClass]="{
+                                'is-invalid':
+                                    submitted && f.Prioritytype.errors
+                            }" class="form-control" formControlName="Prioritytype">
+                                <option *ngFor="let pr of prorityType" [ngValue]="pr"  >{{pr}}
+                                </option>
+                             </select>
+                            <div *ngIf="submitted && f.Prioritytype.errors" class="invalid-feedback">
+                              <div *ngIf="f.Prioritytype.errors.required">
+                               Technician is required
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -175,49 +91,21 @@
     <div class="col-md-6">
         <div class="form-group mt-4">
             <label for="exampleFormControlSelect1">Item</label>
-            <select
-                class="form-control"
-                id="exampleFormControlSelect1"
-                #designationModel="ngModel"
-                required
-                name="designation"
-                [(ngModel)]="service.fromData.designation"
-                [ngModelOptions]="{ standalone: true }"
-            >
-                <option>Select Item</option>
-                <option *ngFor="let onedesingnation of designation">{{ onedesingnation }}</option>
-            </select>
-
-            <div
-                *ngIf="designationModel.invalid && (designationModel.dirty || designationModel.touched)"
-                class="error-message"
-            >
-                <div *ngIf="designationModel.errors?.required">Priority Type required</div>
-                <div class="text-danger">Please select a Item.</div>
+            <select  [ngClass]="{
+                'is-invalid':
+                    submitted && f.InventoryId.errors
+            }" class="form-control" formControlName="InventoryId">
+                <option value="">Choose your priority Type</option>
+                <option *ngFor="let pr of inventoryList" [ngValue]="2"  >{{pr}}
+                </option>
+             </select>
+            <div *ngIf="submitted && f.InventoryId.errors" class="invalid-feedback">
+              <div *ngIf="f.InventoryId.errors.required">
+               Inventory is required
+              </div>
             </div>
         </div>
 
-    </div>
-    <div class="col-md-6">
-
-        <fieldset class="form-group mt-4">
-            <label>Issue Date</label>
-            <input
-                type="date"
-                name="dob"
-                #dobModel="ngModel"
-                required
-                [(ngModel)]="service.fromData.dob"
-                class="form-control"
-            />
-
-            <div *ngIf="dobModel.invalid && (dobModel.dirty || dobModel.touched)" class="error-message">
-                <div *ngIf="dobModel.errors?.required">Issue Date required</div>
-                <div *ngIf="dobModel.errors?.pattern">Enter a Issue Date</div>
-            </div>
-        </fieldset>
-        
-       
     </div>
     
 </div>

@@ -7,10 +7,11 @@ import { TicketissueComponent } from './ticketissue.component';
 
 import { TablesModule } from '../tables/tables.module';
 import { TablesComponent } from '../tables/tables.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-    imports: [CommonModule, TicketissueRoutingModule, PageHeaderModule,TablesModule],
+    imports: [CommonModule, TicketissueRoutingModule, PageHeaderModule,TablesModule,ReactiveFormsModule],
     declarations: [],
     // schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
